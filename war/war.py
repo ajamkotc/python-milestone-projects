@@ -25,7 +25,7 @@ class Card:
         self.value = values[rank]
 
     def __str__(self):
-        return self.rank + ' of ' + self.suit + f" Value: {self.value}"
+        return self.rank + ' of ' + self.suit
 
     def __eq__(self, other_card):
         return ((self.suit == other_card.suit) and (self.rank == other_card.rank))
@@ -137,7 +137,7 @@ class War:
     play_game()
         Plays an entire game of War consisting of multiple rounds'''
 
-    def __init__(self, player_one_name, player_two_name):
+    def __init__(self, player_one_name = "Player One", player_two_name = "Player Two"):
         # Two players per game
         self.player_one = Player(player_one_name)
         self.player_two = Player(player_two_name)
