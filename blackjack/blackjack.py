@@ -4,7 +4,7 @@ suits = {"Spades", "Clubs", "Hearts", "Diamonds"}
 ranks = {"Two", "Three", "Four", "Five", "Six", "Seven", "Eight",
          "Nine", "Ten", "Jack", "Queen", "King", "Ace"}
 values = {"One": 1, "Two": 2, "Three": 3, "Four": 4, "Five": 5, "Six": 6, "Seven": 7, "Eight": 8,
-          "Nine": 9, "Ten": 10, "Jack": 11, "Queen": 12, "King": 13, "Ace": 14}
+          "Nine": 9, "Ten": 10, "Jack": 10, "Queen": 10, "King": 10, "Ace": 11}
 
 class Card:
     '''Class Card represents a single Card.
@@ -34,7 +34,7 @@ class Card:
         return f"{self.rank} of {self.suit}"
 
     def __gt__(self, other_card):
-        '''Overrides '>' operator when comparing two Card instances.
+        '''Overrides '>' operator and compares two cards by their values..
 
         Params
         ------
@@ -48,7 +48,7 @@ class Card:
         return self.value > other_card.value
 
     def __lt__(self, other_card):
-        '''Overrides '<' operator when comparing two Card instances.
+        '''Overrides '<' operator and compares two cards by their values.
 
         Params
         ------
@@ -63,7 +63,18 @@ class Card:
         return self.value < other_card.value
 
     def __eq__(self, other_card):
+        '''Overrides '==' operator when comparing two Card instances.
+
+        Two cards are equal if their rank and suit are the same.'''
+
         return (self.rank == other_card.rank) and (self.suit == other_card.suit)
+
+    def __add__(self, other_card):
+        '''Overrides the '+' operator.
+
+        Adds one cards value to the other's.'''
+
+        return self.value + other_card.value
 
 class Deck:
     '''Class Deck represents an entire deck of Cards.
@@ -122,19 +133,90 @@ class Deck:
     def __contains__(self, card):
         return card in self.all_cards
 
+    def __len__(self):
+        return len(self.all_cards)
+
 class Player:
-    def __init__(self, name):
+    '''Player class representing a Blackjack player.
+
+    Attributes
+    ----------
+    name : str
+        name of the player
+    cards : list
+        cards belonging to the player
+
+    Methods
+    -------
+    add_cards(cards)
+        Adds cards to players 'cards' attribute'''
+
+    def __init__(self, name, money):
         self.name = name
+        self.money = money
         self.cards = []
 
     def add_cards(self, cards):
+        '''Adds cards to the player's hand.
+
+        Params
+        ------
+        cards : list or Card'''
+
         if type(cards) == type([]):
             self.cards.extend(cards)
         else:
             self.cards.append(cards)
 
+    def total_points(self):
+        total = 0
+
+        for card in self.cards:
+            total += card.value
+
+        return total
+
+    def has_ace(self):
+        '''Checks to see if a player has an Ace.
+
+        Returns
+        -------
+        bool
+            True if has an ace, False otherwise'''
+
+        for card in self.cards:
+            if card.rank == "Ace":
+                return True
+        return False
+
+    def __str__(self):
+        return f"{self.name} has {len(self.cards)} cards."
+
+class Blackjack:
+    def __init__(self, player_name):
+        self.player = Player(player_name)
+
+        self.cards = Deck()
+        self.cards.shuffle()
+
+        self.current_bet = 0
+
+    def add_bet(self, bet):
+        self.current_bet += bet
+
+    @classmethod
+    def has_bust(cls, player):
+        score = player.total_points()
+
+        if score <= 21:
+            # If the player has not bust
+            return False
+        elif score > 21 and player.has_ace():
+            # If the player has bust but has an ace whose value can be changed
+            pass
+        else:
+            # Player has bust
+            return True
+
 if __name__ == '__main__':
-    new_deck = Deck()
-    print(new_deck)
-    new_deck.shuffle()
-    print(new_deck)
+    pass

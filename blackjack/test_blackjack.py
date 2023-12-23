@@ -84,5 +84,47 @@ class TestBlackjack(unittest.TestCase):
 
         self.assertFalse(duplicate)
 
+    def test_add_cards(self):
+        '''Tests if a Player's add_cards correctly adds individual cards.'''
+
+        new_player = blackjack.Player("Player One")
+        new_deck = blackjack.Deck()
+
+        quantity = random.randint(1, len(new_deck))
+        index = 0
+
+        while index < quantity:
+            new_player.add_cards(new_deck.deal_one)
+
+            index += 1
+
+        self.assertEqual(quantity, len(new_player.cards), f"{quantity} cards were dealt to player but they have {len(new_player.cards)} cards.")
+
+    def test_add_card_list(self):
+        '''Tests if add_cards in Player correctly adds a list of card to the hand.'''
+
+        new_player = blackjack.Player("Player")
+        new_deck = blackjack.Deck()
+
+        quantity = random.randint(1, len(new_deck) - 1)
+        card_list = new_deck.all_cards[0:quantity]
+
+        new_player.add_cards(card_list)
+
+        self.assertEqual(len(new_player.cards), quantity, f"{quantity} cards were dealt to player but they have {len(new_player.cards)} cards.")
+
+    def test_player_str(self):
+        '''Tests if Player's __str__ works correctly.'''
+
+        new_player = blackjack.Player("Player")
+        new_deck = blackjack.Deck()
+
+        quantity = random.randint(1, len(new_deck))
+        new_player.add_cards(new_deck.all_cards[0:quantity])
+
+        player_str = str(new_player)
+
+        self.assertEqual(f"Player has {quantity} cards.", player_str, "Player string representation incorrect.")
+
 if __name__ == '__main__':
     unittest.main()
