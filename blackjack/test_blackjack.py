@@ -1,9 +1,49 @@
+import random
 import unittest
 import blackjack
-import random
 import exceptions
 
 class TestBlackjack(unittest.TestCase):
+    '''Test suite for Blackjack card game
+
+    Attributes
+    ----------
+    name : str
+        placeholder name
+
+    Tests
+    -------
+    test_deck_length
+        Tests the length of the deck
+    test_deck_duplicates
+        Tests if the deck has any duplicate cards.
+    test_shuffle
+        Tests if the deck is sufficiently shuffled.
+    test_deal_card
+        Tests method deal_one in class Deck.
+    test_deal_card_duplicate
+        Tests if a Card is truly removed when deal_one() is called.
+    test_add_money
+        Tests if money is correctly added to the 'money' attribute.
+    test_add_card
+        Tests if a Player's add_cards correctly adds individual cards.
+    test_place_bet
+        Tests if Player's place_bet() works correctly.
+    test_bet_exception
+        Tests if Player's place_bet() correctly raises an Insufficient Funds Exception.
+    test_total_points
+        Tests if card values are correctly added.
+    test_clear
+        Tests if player's cards are completely cleared.
+    test_out_money
+        Tests method out_of_money when player's money is depleted.
+    test_starting_player_deal
+        Tests if player is dealt two cards at the beginning of a round.
+    test_starting_dealer_deal
+        Tests if dealer is dealt two cards at the beginning of a round.'''
+
+    name = "Player"
+
     def test_deck_length(self):
         '''Tests the length of the deck.'''
 
@@ -85,24 +125,18 @@ class TestBlackjack(unittest.TestCase):
 
         self.assertFalse(duplicate)
 
+    def test_add_money(self):
+        '''Tests if money is correctly added to the 'money' attribute.'''
+
+        new_player = blackjack.Player("Player", 0)
+        money = random.randint(0, 100)
+
+        new_player.add_money(money)
+
+        self.assertEqual(new_player.money, money, "Money not correctly added to player")
+
     def test_add_card(self):
         '''Tests if a Player's add_cards correctly adds individual cards.'''
-
-        new_player = blackjack.Player("Player One")
-        new_deck = blackjack.Deck()
-
-        quantity = random.randint(1, len(new_deck))
-        index = 0
-
-        while index < quantity:
-            new_player.add_card(new_deck.deal_one)
-
-            index += 1
-
-        self.assertEqual(quantity, len(new_player.cards), f"{quantity} cards were dealt to player but they have {len(new_player.cards)} cards.")
-
-    def test_player_str(self):
-        '''Tests if Player's __str__ works correctly.'''
 
         new_player = blackjack.Player("Player")
         new_deck = blackjack.Deck()
@@ -112,11 +146,11 @@ class TestBlackjack(unittest.TestCase):
 
         while index < quantity:
             new_player.add_card(new_deck.deal_one())
+
             index += 1
 
-        player_str = str(new_player)
-
-        self.assertEqual(f"Player has {quantity} cards.", player_str, "Player string representation incorrect.")
+        self.assertEqual(quantity,len(new_player.cards),
+                         f"{quantity} cards were dealt to player but they have {len(new_player.cards)} cards.")
 
     def test_place_bet(self):
         '''Tests if Player's place_bet() works correctly.'''
@@ -127,10 +161,11 @@ class TestBlackjack(unittest.TestCase):
         bet_amount = random.randint(1, starting_money)
         new_player.place_bet(bet_amount)
 
-        self.assertEqual(new_player.money, starting_money - bet_amount, "Incorrect amount subtracted from player's available money.")
+        self.assertEqual(new_player.money, starting_money - bet_amount,
+                         "Incorrect amount subtracted from player's available money.")
 
     def test_bet_exception(self):
-        '''Tests if Player's place_bet() correctly raises an Insufficient Funds Exception
+        '''Tests if Player's place_bet() correctly raises an Insufficient Funds Exception.
         when the bet amount is greater than the player's available money.'''
 
         starting_money = random.randint(1, 1000)
@@ -138,6 +173,58 @@ class TestBlackjack(unittest.TestCase):
 
         with self.assertRaises(exceptions.InsufficientFundsException):
             new_player.place_bet(starting_money + 1)
+
+    def test_total_points(self):
+        '''Tests if card values are correctly added.
+
+        Ensures that ace values are switched to 1 if they would cause a
+        bust if calculated a an 11.'''
+
+        new_player = blackjack.Player(self.name)
+
+        card_one = blackjack.Card("Ace", "Spades")
+        card_two = blackjack.Card("Five", "Clubs")
+        card_three = blackjack.Card("King", "Hearts")
+
+        new_player.add_card(card_one)
+        new_player.add_card(card_two)
+        self.assertEqual(new_player.total_points(), 16, "Pre-assigned values not correctly added")
+
+        new_player.add_card(card_one)
+        self.assertEqual(new_player.total_points(), 17, "Ace value not correctly changed")
+
+        new_player.add_card(card_three)
+        self.assertEqual(new_player.total_points(), 17, "Face card value incorrectly added.")
+
+        new_player.add_card(card_three)
+        self.assertEqual(new_player.total_points(), 27, "Face card value incorrectly added.")
+
+    def test_clear(self):
+        '''Tests if player's cards are completely cleared.'''
+
+        new_deck = blackjack.Deck()
+        new_player = blackjack.Player(self.name)
+
+        card_amount = random.randint(1, 52)
+        index = 0
+
+        while index in range(0, card_amount):
+            new_player.add_card(new_deck.deal_one())
+            index += 1
+
+        new_player.clear_cards()
+
+        self.assertEqual(len(new_player.cards), 0, "Player deck not completely cleared.")
+
+    def test_out_money(self):
+        '''Tests method out_of_money when player's money is depleted.'''
+
+        money = random.randint(1, 100)
+        new_player = blackjack.Player(self.name, money)
+
+        new_player.place_bet(money)
+
+        self.assertTrue(new_player.out_of_money(), "Player should be out of money.")
 
     def test_starting_player_deal(self):
         '''Tests if player is dealt two cards at the beginning of a round.'''

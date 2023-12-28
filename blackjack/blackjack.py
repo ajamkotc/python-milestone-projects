@@ -210,6 +210,15 @@ class Player:
         self.cards.sort(key=lambda card: card.value)
 
     def total_points(self):
+        '''Calculates the total points of the player's hand.
+
+        If ace will cause player to bust, value is changed to 1.
+
+        Returns
+        -------
+        total : int
+            total value of the hand'''
+
         total = 0
 
         for card in self.cards:
@@ -220,19 +229,6 @@ class Player:
                 total += card.value
 
         return total
-
-    def has_ace(self):
-        '''Checks to see if a player has an Ace.
-
-        Returns
-        -------
-        bool
-            True if has an ace, False otherwise'''
-
-        for card in self.cards:
-            if card.rank == "Ace":
-                return True
-        return False
 
     def __str__(self):
         return_string = f"{self.name}'s hand consists of:\n"
