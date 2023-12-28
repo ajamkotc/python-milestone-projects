@@ -40,15 +40,21 @@ class TestBlackjack(unittest.TestCase):
     test_starting_player_deal
         Tests if player is dealt two cards at the beginning of a round.
     test_starting_dealer_deal
-        Tests if dealer is dealt two cards at the beginning of a round.'''
+        Tests if dealer is dealt two cards at the beginning of a round.
+    test_has_bust
+        Tests if class method has_bust works properly.'''
 
     name = "Player"
+    deck_length = 52
+
+    # Tests for Deck class
 
     def test_deck_length(self):
         '''Tests the length of the deck.'''
 
         new_deck = blackjack.Deck()
-        self.assertEqual(len(new_deck.all_cards), 52, f"Deck has {len(new_deck.all_cards)}")
+        self.assertEqual(len(new_deck.all_cards), self.deck_length,
+                         f"Deck has {len(new_deck.all_cards)}")
 
     def test_deck_duplicates(self):
         '''Tests if the deck has any duplicate cards.'''
@@ -100,7 +106,7 @@ class TestBlackjack(unittest.TestCase):
             new_deck.deal_one()
             index += 1
 
-        self.assertEqual(len(new_deck.all_cards), 52 - random_rep)
+        self.assertEqual(len(new_deck.all_cards), self.deck_length - random_rep)
 
     def test_deal_card_duplicate(self):
         '''Tests if a Card is truly removed when deal_one() is called.
@@ -125,10 +131,12 @@ class TestBlackjack(unittest.TestCase):
 
         self.assertFalse(duplicate)
 
+    # Tests for Player class
+
     def test_add_money(self):
         '''Tests if money is correctly added to the 'money' attribute.'''
 
-        new_player = blackjack.Player("Player", 0)
+        new_player = blackjack.Player(self.name, 0)
         money = random.randint(0, 100)
 
         new_player.add_money(money)
@@ -138,7 +146,7 @@ class TestBlackjack(unittest.TestCase):
     def test_add_card(self):
         '''Tests if a Player's add_cards correctly adds individual cards.'''
 
-        new_player = blackjack.Player("Player")
+        new_player = blackjack.Player(self.name)
         new_deck = blackjack.Deck()
 
         quantity = random.randint(1, len(new_deck))
@@ -156,7 +164,7 @@ class TestBlackjack(unittest.TestCase):
         '''Tests if Player's place_bet() works correctly.'''
 
         starting_money = random.randint(1, 1000)
-        new_player = blackjack.Player("Player 1", starting_money)
+        new_player = blackjack.Player(self.name, starting_money)
 
         bet_amount = random.randint(1, starting_money)
         new_player.place_bet(bet_amount)
@@ -169,7 +177,7 @@ class TestBlackjack(unittest.TestCase):
         when the bet amount is greater than the player's available money.'''
 
         starting_money = random.randint(1, 1000)
-        new_player = blackjack.Player("Player 1", starting_money)
+        new_player = blackjack.Player(self.name, starting_money)
 
         with self.assertRaises(exceptions.InsufficientFundsException):
             new_player.place_bet(starting_money + 1)
@@ -205,7 +213,7 @@ class TestBlackjack(unittest.TestCase):
         new_deck = blackjack.Deck()
         new_player = blackjack.Player(self.name)
 
-        card_amount = random.randint(1, 52)
+        card_amount = random.randint(1, self.deck_length)
         index = 0
 
         while index in range(0, card_amount):
@@ -226,10 +234,12 @@ class TestBlackjack(unittest.TestCase):
 
         self.assertTrue(new_player.out_of_money(), "Player should be out of money.")
 
+    # Tests for Blackjack class
+
     def test_starting_player_deal(self):
         '''Tests if player is dealt two cards at the beginning of a round.'''
 
-        new_game = blackjack.Blackjack("Player")
+        new_game = blackjack.Blackjack(self.name)
         new_game.deal_starting_round()
 
         self.assertEqual(len(new_game.player.cards), 2, "Player not dealt 2 starting cards.")
@@ -237,10 +247,21 @@ class TestBlackjack(unittest.TestCase):
     def test_starting_dealer_deal(self):
         '''Tests if dealer is dealt two cards at the beginning of a round.'''
 
-        new_game = blackjack.Blackjack("Player")
+        new_game = blackjack.Blackjack(self.name)
         new_game.deal_starting_round()
 
         self.assertEqual(len(new_game.dealer.cards), 2, "Dealer not dealt two starting cards.")
+
+    def test_has_bust(self):
+        '''Tests if class method has_bust works properly.'''
+
+        new_player = blackjack.Player(self.name)
+        new_player.add_card(blackjack.Card("King", "Spades"))
+        new_player.add_card(blackjack.Card("King", "Hearts"))
+        self.assertFalse(blackjack.Blackjack.has_bust(new_player), "Player has not bust.")
+
+        new_player.add_card(blackjack.Card("Two", "Diamonds"))
+        self.assertTrue(blackjack.Blackjack.has_bust(new_player), "Player should have bust.")
 
 if __name__ == '__main__':
     unittest.main()

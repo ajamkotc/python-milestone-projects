@@ -1,4 +1,5 @@
 import random
+from colorama import Fore
 import exceptions
 
 suits = {"Spades", "Clubs", "Hearts", "Diamonds"}
@@ -33,35 +34,6 @@ class Card:
             self.rank of self.suit'''
 
         return f"{self.rank} of {self.suit}"
-
-    def __gt__(self, other_card):
-        '''Overrides '>' operator and compares two cards by their values..
-
-        Params
-        ------
-        other_card : Card
-            Card with which instance of current card is being compared
-
-        Returns
-        -------
-        Boolean
-            True if Card on the left of '>' operator is greater than Card on the right'''
-        return self.value > other_card.value
-
-    def __lt__(self, other_card):
-        '''Overrides '<' operator and compares two cards by their values.
-
-        Params
-        ------
-        other_card : Card
-            Card with which instance of current card is being compared
-
-        Returns
-        -------
-        Boolean
-            True if Card on the left of '<' operator is greater than Card on the right'''
-
-        return self.value < other_card.value
 
     def __eq__(self, other_card):
         '''Overrides '==' operator when comparing two Card instances.
@@ -239,6 +211,41 @@ class Player:
         return return_string
 
 class Blackjack:
+    '''Class to handle aspects and logic of Blackjack.
+
+    Attributes
+    ----------
+    player : Player
+        represents the player
+    dealer : Player
+        represents the dealer
+    cards : Deck
+        deck being used for the game
+    bet : int
+        bet amount for each round
+
+    Methods
+    -------
+    deal_starting_round()
+        Deals starting hand of two cards first to the player then the dealer.
+    dealer_round()
+        Dealer deals themselves cards as long as they have less than 17 points.
+    prompt_player()
+        Prompts the player to hit or stand.
+    prompt_player_bet()
+        Prompts the player for a bet amount.
+    prompt_player_round()
+        Asks the user if they would like to continue playing.
+    player_round()
+        Player's round.
+    game()
+        Method to carry out logic of the game of Blackjack.
+
+    Class Methods
+    -------------
+    has_bust(player)
+        Checks to see if player's hand caused them to bust.'''
+
     def __init__(self, starting_amount, player_name="Player"):
         self.player = Player(player_name, starting_amount)
         self.dealer = Player("Dealer")
@@ -259,11 +266,11 @@ class Blackjack:
 
     def dealer_round(self):
         '''Dealer deals themselves cards as long as they have less than 17 points.'''
-        print(f"Dealers other card is a {self.dealer.cards[1]}\n")
+        print(Fore.BLUE + f"\nDealer flips over a {self.dealer.cards[1]}\n")
 
         while self.dealer.total_points() < 17:
             new_card = self.cards.deal_one()
-            print(f"Dealer was dealt a {new_card}")
+            print(f"Dealer deals themselves a {new_card}")
             self.dealer.add_card(new_card)
 
     def prompt_player(self):
@@ -278,12 +285,12 @@ class Blackjack:
 
         while True:
             try:
-                player_input = input("Would you like to 'hit' or 'stand': ")
+                player_input = input(Fore.WHITE + "Would you like to 'hit' or 'stand': ")
 
                 if player_input.lower() not in menu_options:
                     raise exceptions.InputException
             except exceptions.InputException:
-                print("Invalid input. Please select from the provided options\n")
+                print(Fore.RED + "Invalid input. Please select from the provided options\n")
                 continue
             else:
                 break
@@ -302,19 +309,19 @@ class Blackjack:
         player_input : int
             stores the player's selected bet amount'''
 
-        print(f"{self.player.name} has {self.player.money} dollars available.")
+        print(Fore.WHITE + f"{self.player.name} has {self.player.money} dollars available.")
         while True:
             try:
-                player_input = input("Please enter bet amount: ")
+                player_input = input(Fore.WHITE + "Please enter bet amount: ")
 
                 if int(player_input) > self.player.money:
                     raise exceptions.InsufficientFundsException
             except ValueError:
-                print("Please input an integer value")
+                print(Fore.RED + "Please input an integer value")
 
                 continue
             except exceptions.InsufficientFundsException:
-                print("You entered an amount greater than your available funds.")
+                print(Fore.RED + "You entered an amount greater than your available funds.")
                 print(f"Available funds: {self.player.money}")
 
                 continue
@@ -336,12 +343,12 @@ class Blackjack:
 
         while True:
             try:
-                player_choice = input("Would you like to play another round? (y/n): ")
+                player_choice = input(Fore.WHITE + "Would you like to play another round? (y/n): ")
 
                 if player_choice.lower() not in choices:
                     raise exceptions.InputException
             except exceptions.InputException:
-                print("Invalid choice. Please enter 'y' for yes and 'n' for no")
+                print(Fore.RED + "Invalid choice. Please enter 'y' for yes and 'n' for no")
                 continue
             else:
                 break
@@ -354,20 +361,23 @@ class Blackjack:
         Player sets their bet, gets dealt their starting round, and then is asked
         to hit or stand until they choose to stand or bust.'''
 
-        print(f"{self.player.name}, you're up!\n")
+        print(Fore.GREEN + f"{self.player.name}, you're up!\n")
         self.bet = self.prompt_player_bet()
         self.player.place_bet(self.bet)
 
         self.deal_starting_round()
-        print(f"{self.player.name} was dealt a {self.player.cards[0]} and a {self.player.cards[1]}")
-        print(f"Dealer's faceup card is a: {self.dealer.cards[0]}\n")
+        print(Fore.GREEN +
+              f"\n{self.player.name}'s cards: {self.player.cards[0]} and a {self.player.cards[1]}")
+        print(Fore.BLUE + f"Dealer's faceup card is a: {self.dealer.cards[0]}\n")
 
         while not Blackjack.has_bust(self.player) and self.prompt_player() == 'hit':
             new_card = self.cards.deal_one()
             self.player.add_card(new_card)
-            print(f"Dealer dealt a {new_card}\n")
+            print(Fore.GREEN + f"{self.player.name} was dealt a {new_card}\n")
 
     def game(self):
+        '''Method to carry out logic of the game of Blackjack.'''
+
         continue_game = 'y'
 
         while continue_game == 'y':
@@ -381,7 +391,7 @@ class Blackjack:
 
             if self.has_bust(self.player):
                 # If the player busts, they automatically lose.
-                print(f"{self.player.name} bust! Dealer wins this round")
+                print(Fore.RED + f"{self.player.name} bust! Dealer wins this round")
             else:
                 # Dealer hits until they have at least 17
                 self.dealer_round()
@@ -389,46 +399,59 @@ class Blackjack:
 
                 if self.has_bust(self.dealer):
                     # If the dealer busts, the player wins
-                    print(f"Dealer bust! {self.player.name} wins.")
+                    print(Fore.GREEN + f"Dealer bust! {self.player.name} wins.")
 
                     self.player.add_money(self.bet * 2)
                 elif dealer_points < player_points:
                     # If neither have busted and the player scores more points
-                    print(f"Dealer scored {dealer_points} points, {self.player.name} scored {player_points} points.")
+                    print(Fore.GREEN +
+                          f"Dealer scored {dealer_points} points, {self.player.name} scored {player_points} points.")
                     print(f"{self.player.name} wins!")
 
                     self.player.add_money(self.bet * 2)
                 elif player_points < dealer_points:
                     # If neither have busted but the dealer scores more points
-                    print(f"Dealer scored more points. {self.player.name} loses.")
+                    print(Fore.RED + f"Dealer scored more points. {self.player.name} loses.")
                 else:
                     # In case of a tie
-                    print("Tie!")
+                    print(Fore.BLUE + "Tie!")
 
                     self.player.add_money(self.bet)
 
             if self.player.out_of_money():
-                print("You are all out of money. Try again next time")
+                print(Fore.RED + "You are all out of money. Try again next time")
                 break
-            else:
-                continue_game = self.prompt_player_round()
+
+            continue_game = self.prompt_player_round()
 
     @classmethod
     def has_bust(cls, player):
+        '''Checks to see if player's hand caused them to bust.
+
+        Params
+        ------
+        player : Player
+            player whose hand will be tested
+
+        Returns
+        -------
+        bool
+            True if has bust, False otherwise'''
+
         score = player.total_points()
 
         return score > 21
 
 if __name__ == '__main__':
     print("Welcome to Blackjack!")
-    player_name = ''
-    player_starting_money = 0
+    input_name = ''
+    input_money = 0
 
     while True:
         try:
-            player_name = input("Please enter your name: ")
+            input_name = input("Please enter your name: ")
 
-            if len(player_name) < 1:
+            if len(input_name) < 1:
                 raise exceptions.InvalidNameException
         except exceptions.InvalidNameException:
             print("Incorrect name. Please enter at least one character.")
@@ -438,7 +461,7 @@ if __name__ == '__main__':
 
     while True:
         try:
-            player_starting_money = int(input("Please enter your starting money amount: "))
+            input_money = int(input("Please enter your starting money amount: "))
         except ValueError:
             print("Please enter an integer for your starting money amount.")
             continue
@@ -446,5 +469,5 @@ if __name__ == '__main__':
             break
 
     print()
-    new_game = Blackjack(player_starting_money, player_name)
+    new_game = Blackjack(input_money, input_name)
     new_game.game()
