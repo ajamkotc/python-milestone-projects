@@ -6,7 +6,9 @@ class Sort:
     merge_lists(list1, list2)
         Merges two lists
     merge_sort(unsorted_list)
-        Sorts a list using the merge-sort algorithm'''
+        Sorts a list using the merge-sort algorithm
+    bubble_sort(unsorted_list)
+        Sorts a list using the bubble-sort algorithm'''
 
     @classmethod
     def merge_lists(cls, list1, list2):
@@ -83,6 +85,17 @@ class Sort:
 
     @classmethod
     def bubble_sort(cls, unsorted_list):
+        '''Sorts a list using the bubble-sort algorithm
+
+        Params
+        ------
+        unsorted_list : list
+
+        Returns
+        -------
+        return_list : list
+            Sorted list'''
+
         reps = len(unsorted_list) - 1
         return_list = unsorted_list.copy()
 
