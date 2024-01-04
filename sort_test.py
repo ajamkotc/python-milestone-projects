@@ -10,7 +10,9 @@ class TestSorts(unittest.TestCase):
     test_merge_lists
         Tests class method merge_lists.
     test_merge_lists2
-        Tests class method merge_lists.'''
+        Tests class method merge_lists.
+    test_bubble_sort
+        Tests class method bubble_sort'''
 
     def test_merge_lists(self):
         '''Tests class method merge_lists.'''
@@ -44,6 +46,16 @@ class TestSorts(unittest.TestCase):
 
         self.assertEqual(merge_sorted, random_list, 'Merge sort incorrect.')
 
+    def test_bubble_sort(self):
+        '''Tests class method bubble_sort.'''
+
+        list_length = random.randint(100, 200)
+        random_list = random.sample(range(1, list_length), list_length - 1)
+
+        bubble_sorted = sort.Sort.bubble_sort(random_list)
+        random_list.sort()
+
+        self.assertEqual(bubble_sorted, random_list, "Bubble sort doesn't work.")
 
 if __name__ == '__main__':
     unittest.main()

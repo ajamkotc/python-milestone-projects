@@ -81,5 +81,32 @@ class Sort:
 
         return sorted_list
 
+    @classmethod
+    def bubble_sort(cls, unsorted_list):
+        reps = len(unsorted_list) - 1
+        return_list = unsorted_list.copy()
+
+        for num in range(0, reps):
+            index = 0
+            swapped = False
+
+            while index < len(return_list) - 1:
+                if return_list[index] > return_list[index + 1]:
+                    # Store index + 1 value
+                    lesser = return_list[index + 1]
+
+                    return_list[index + 1] = return_list[index]
+                    return_list[index] = lesser
+
+                    swapped = True
+
+                index += 1
+
+            if swapped == False:
+                break
+
+        return return_list
+
 if __name__ == '__main__':
-    print(Sort.merge_sort([5, 3, 9, 10, 1]))
+    new_list = [9, 8, 7, 1, 2, 3]
+    print(Sort.bubble_sort(new_list))
