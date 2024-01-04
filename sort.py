@@ -99,7 +99,9 @@ class Sort:
         reps = len(unsorted_list) - 1
         return_list = unsorted_list.copy()
 
-        for num in range(0, reps):
+        reps_index = 0
+
+        while reps_index <= reps:
             index = 0
             swapped = False
 
@@ -115,8 +117,10 @@ class Sort:
 
                 index += 1
 
-            if swapped == False:
+            if swapped is False:
                 break
+
+            reps_index += 1
 
         return return_list
 
