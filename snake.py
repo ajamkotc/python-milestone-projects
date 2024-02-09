@@ -44,3 +44,23 @@ class Snake:
             self.segments[turtle_pos].setpos(x=next_x, y=next_y)
 
         self.segments[0].forward(20)
+
+    def move_north(self):
+        """Points the snake north"""
+
+        self.segments[0].setheading(90)
+
+    def move_west(self):
+        """Points the snake west"""
+
+        self.segments[0].setheading(180)
+
+    def move_east(self):
+        """Points the snake east"""
+
+        self.segments[0].setheading(0)
+
+    def move_south(self):
+        """Points the snake south"""
+
+        self.segments[0].setheading(270)

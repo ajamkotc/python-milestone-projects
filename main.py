@@ -10,11 +10,17 @@ screen.title('My Snake Game')
 
 new_snake = Snake(3)
 
+screen.onkey(new_snake.move_east, key='d')
+screen.onkey(new_snake.move_west, key='a')
+screen.onkey(new_snake.move_north, key='w')
+screen.onkey(new_snake.move_south, key='s')
+screen.listen()
+
 game_on = True
 
 while game_on:
     screen.update()
-    time.sleep(0.5)
+    time.sleep(0.2)
     new_snake.move_snake()
 
 screen.exitonclick()
