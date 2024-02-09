@@ -48,19 +48,22 @@ class Snake:
     def move_north(self):
         """Points the snake north"""
 
-        self.segments[0].setheading(90)
+        if not self.segments[0].heading() == 270:
+            self.segments[0].setheading(90)
 
     def move_west(self):
         """Points the snake west"""
-
-        self.segments[0].setheading(180)
+        if not self.segments[0].heading() == 0:
+            self.segments[0].setheading(180)
 
     def move_east(self):
         """Points the snake east"""
 
-        self.segments[0].setheading(0)
+        if not self.segments[0].heading() == 180:
+            self.segments[0].setheading(0)
 
     def move_south(self):
         """Points the snake south"""
 
-        self.segments[0].setheading(270)
+        if not self.segments[0].heading() == 90:
+            self.segments[0].setheading(270)
