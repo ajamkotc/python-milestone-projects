@@ -17,6 +17,20 @@ class Snake:
         self.segments = [Turtle() for _ in range(segment_quantity)]
         self.place_starting()
 
+    def add_segment(self):
+        last_segment = self.segments[len(self.segments)-1]
+        last_pos = last_segment.pos()
+        last_x = last_pos[0]
+        last_y = last_pos[1]
+        self.move_snake()
+
+        new_segment = Turtle()
+        new_segment.penup()
+        new_segment.color('white')
+        new_segment.shape('square')
+        new_segment.setpos(last_x, last_y)
+        self.segments.append(new_segment)
+
     def place_starting(self):
         """Sets up starting snake.
 

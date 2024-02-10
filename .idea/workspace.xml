@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c017881-986b-4a5c-b01d-4b6e6a98e00e" name="Changes" comment="Create new project snake-game">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="7c017881-986b-4a5c-b01d-4b6e6a98e00e" name="Changes" comment="Correct functionality methods&#10;&#10;Snake will not be allowed to make 180 degree changes&#10;in direction." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,11 +55,47 @@
       <option name="project" value="LOCAL" />
       <updated>1707015137964</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Create starting segments and movement&#10;&#10;Set up screen to function for snake game. Add starting&#10;segments using a loop. Move all segments using a loop.">
+      <option name="closed" value="true" />
+      <created>1707448868887</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1707448868887</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Convert to OOP format&#10;&#10;Create snake.py file to store Snake class. Create&#10;init method, method to set up starting positions, &#10;and method to move snake forward. Convert&#10;main.py to run with instance of Snake.">
+      <option name="closed" value="true" />
+      <created>1707450941623</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1707450941623</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add button functionality to change direction">
+      <option name="closed" value="true" />
+      <created>1707451619211</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1707451619211</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Correct functionality methods&#10;&#10;Snake will not be allowed to make 180 degree changes&#10;in direction.">
+      <option name="closed" value="true" />
+      <created>1707451972220</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1707451972220</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create new project snake-game" />
-    <option name="LAST_COMMIT_MESSAGE" value="Create new project snake-game" />
+    <MESSAGE value="Create starting segments and movement&#10;&#10;Set up screen to function for snake game. Add starting&#10;segments using a loop. Move all segments using a loop." />
+    <MESSAGE value="Convert to OOP format&#10;&#10;Create snake.py file to store Snake class. Create&#10;init method, method to set up starting positions, &#10;and method to move snake forward. Convert&#10;main.py to run with instance of Snake." />
+    <MESSAGE value="Add button functionality to change direction" />
+    <MESSAGE value="Correct functionality methods&#10;&#10;Snake will not be allowed to make 180 degree changes&#10;in direction." />
+    <option name="LAST_COMMIT_MESSAGE" value="Correct functionality methods&#10;&#10;Snake will not be allowed to make 180 degree changes&#10;in direction." />
   </component>
 </project>
