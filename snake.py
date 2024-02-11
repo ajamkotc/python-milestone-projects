@@ -9,20 +9,31 @@ class Snake:
     Methods
     -------
     place_starting():
-        Sets up the starting segments
+        Sets up starting snake
     move_snake():
-        Moves the snake forward
+        Moves the snake forward as a block
+    add_segment():
+        Adds a new segment to the snake
+    move_north():
+        Points the snake north
+    move_south():
+        Points the snake south
+    move_east():
+        Points the snake east
+    move_west():
+        Points the snake west
     """
     def __init__(self, segment_quantity=3):
         self.segments = [Turtle() for _ in range(segment_quantity)]
         self.place_starting()
 
     def add_segment(self):
-        last_segment = self.segments[len(self.segments)-1]
+        """Adds a new segment to the snake"""
+
+        last_segment = self.segments[-1]
         last_pos = last_segment.pos()
         last_x = last_pos[0]
         last_y = last_pos[1]
-        self.move_snake()
 
         new_segment = Turtle()
         new_segment.penup()
@@ -45,6 +56,19 @@ class Snake:
             turtle.setpos(x=x_cor, y=y_cor)
 
             x_cor -= 20
+
+    def wall_collision(self):
+        current_screen = self.segments[0].getscreen()
+        screen_height = current_screen.window_height()
+        screen_width = current_screen.window_width()
+
+        snake_x = abs(self.segments[0].xcor())
+        snake_y = abs(self.segments[0].ycor())
+
+        if snake_x > (screen_width/2 - 10) or snake_y > (screen_height/2 - 10):
+            return True
+        else:
+            return False
 
     def move_snake(self):
         """Moves the snake forward as a block

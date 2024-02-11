@@ -2,13 +2,6 @@ from turtle import Turtle
 import random
 
 
-def random_pos():
-    x_cor = random.randint(a=-200, b=200)
-    y_cor = random.randint(a=-200, b=200)
-
-    return x_cor, y_cor
-
-
 class Food(Turtle):
     def __init__(self):
         super().__init__()
@@ -19,4 +12,13 @@ class Food(Turtle):
         self.refresh()
 
     def refresh(self):
-        self.setpos(random_pos())
+        self.setpos(self.random_pos())
+
+    def random_pos(self):
+        current_screen = self.getscreen()
+        screen_height = int(current_screen.window_height() / 2) - 20
+        screen_width = int(current_screen.window_width() / 2) - 20
+        x_cor = random.randrange(start=-screen_width, stop=screen_width, step=10)
+        y_cor = random.randrange(start=-screen_height, stop=screen_height, step=10)
+
+        return x_cor, y_cor
