@@ -1,5 +1,6 @@
 from paddle import Paddle
 from turtle import Turtle
+from ball import Ball
 
 GAP = 40
 
@@ -22,6 +23,7 @@ class Board:
         self.right_paddle = Paddle()
         self.position_paddles()
         self.draw_divide()
+        self.ball = Ball()
 
     def position_paddles(self):
         """Positions the two paddles at opposite ends of the screen"""
@@ -32,6 +34,9 @@ class Board:
         self.right_paddle.setpos(x=screen_width-GAP, y=0)
 
     def draw_divide(self):
+        """Draws the center divide dotted line"""
+
+        # Set up turtle to draw line
         drawer = Turtle()
         drawer.pencolor('white')
         drawer.penup()
@@ -44,6 +49,7 @@ class Board:
         screen_height = screen.window_height()
         drawer.setpos(x=0, y=-screen_height)
 
+        # Draw until get to top of screen
         while drawer.ycor() < screen_height:
             drawer.pendown()
             drawer.forward(50)
