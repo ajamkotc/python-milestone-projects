@@ -10,8 +10,10 @@ class Ball(Turtle):
         self.penup()
 
     def bounce(self):
+        pass
+
+    def wall_collision(self):
         screen = self.getscreen()
-        screen_height = screen.window_height()
-        screen_width = screen.window_width()
+        screen_height = screen.window_height() / 2
 
-
+        return self.distance(x=self.xcor(), y=screen_height) < 20

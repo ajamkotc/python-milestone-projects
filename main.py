@@ -1,3 +1,4 @@
+import time
 from turtle import Screen
 from board import Board
 import pyautogui
@@ -26,6 +27,10 @@ screen.listen()
 game_on = True
 while game_on:
     screen.update()
+    time.sleep(1)
+    board.ball.setheading(90)
+    board.ball.forward(50)
+    board.ball.wall_collision()
 
 
 screen.exitonclick()
