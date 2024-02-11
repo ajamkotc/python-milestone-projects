@@ -70,6 +70,13 @@ class Snake:
         else:
             return False
 
+    def self_collision(self):
+        for segment in self.segments[:0:-1]:
+            if self.segments[0].distance(segment) < 15:
+                return True
+
+        return False
+
     def move_snake(self):
         """Moves the snake forward as a block
 

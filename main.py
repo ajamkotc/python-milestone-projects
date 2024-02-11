@@ -44,9 +44,10 @@ while game_on:
         new_snake.add_segment()
         scoreboard.add_point()
 
-    # Check if collision with wall
-    if new_snake.wall_collision():
+    # Check if collision with wall or self
+    if new_snake.wall_collision() or new_snake.self_collision():
         scoreboard.game_over()
         game_on = False
+
 
 screen.exitonclick()

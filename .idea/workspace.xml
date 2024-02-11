@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7c017881-986b-4a5c-b01d-4b6e6a98e00e" name="Changes" comment="Add food class and collision detection. &#10;&#10;Add food class which derives from the Turtle class. &#10;Snake currently detects when collides with food and a&#10;segment is added, however it shouldn't move forward&#10;when that happens.">
-      <change afterPath="$PROJECT_DIR$/scoreboard.py" afterDir="false" />
+    <list default="true" id="7c017881-986b-4a5c-b01d-4b6e6a98e00e" name="Changes" comment="Improve food placement and wall collision detection&#10;&#10;Add method to snake class to detect when it collides&#10;with the borders of the screen. &#10;&#10;Snake no longer moves when collides with food. &#10;&#10;Implement game over screen which pops up when the&#10;snake collides with a wall.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/food.py" beforeDir="false" afterPath="$PROJECT_DIR$/food.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/snake.py" beforeDir="false" afterPath="$PROJECT_DIR$/snake.py" afterDir="false" />
     </list>
@@ -101,7 +99,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707608722594</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Improve food placement and wall collision detection&#10;&#10;Add method to snake class to detect when it collides&#10;with the borders of the screen. &#10;&#10;Snake no longer moves when collides with food. &#10;&#10;Implement game over screen which pops up when the&#10;snake collides with a wall.">
+      <option name="closed" value="true" />
+      <created>1707613847590</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1707613847590</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -111,6 +117,7 @@
     <MESSAGE value="Add button functionality to change direction" />
     <MESSAGE value="Correct functionality methods&#10;&#10;Snake will not be allowed to make 180 degree changes&#10;in direction." />
     <MESSAGE value="Add food class and collision detection. &#10;&#10;Add food class which derives from the Turtle class. &#10;Snake currently detects when collides with food and a&#10;segment is added, however it shouldn't move forward&#10;when that happens." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add food class and collision detection. &#10;&#10;Add food class which derives from the Turtle class. &#10;Snake currently detects when collides with food and a&#10;segment is added, however it shouldn't move forward&#10;when that happens." />
+    <MESSAGE value="Improve food placement and wall collision detection&#10;&#10;Add method to snake class to detect when it collides&#10;with the borders of the screen. &#10;&#10;Snake no longer moves when collides with food. &#10;&#10;Implement game over screen which pops up when the&#10;snake collides with a wall." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve food placement and wall collision detection&#10;&#10;Add method to snake class to detect when it collides&#10;with the borders of the screen. &#10;&#10;Snake no longer moves when collides with food. &#10;&#10;Implement game over screen which pops up when the&#10;snake collides with a wall." />
   </component>
 </project>
